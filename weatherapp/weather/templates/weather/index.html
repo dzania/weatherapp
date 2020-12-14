@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's the weather like?</title>
+    {%load static%}
+    <link rel="stylesheet" type="text/css" href="{% static 'weather/style.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+<body>
+  
+  <div class="header">
+    <h1>WeatherAPP</h1>
+  </div>
+
+<div class="p1">
+  <p>Check weather in every city!</p>
+</div>
+<form action ="" method="POST">
+  {% csrf_token %}
+<div class="wrap">
+  <div class="search">
+     <input type="text" class="searchTerm" name="city"  placeholder="Enter city name..." value='{% if submitbutton == "Submit"%} {{city}} {%endif%}'required>
+     <button type="Submit" class="searchButton" name="Submit" value="Submit">
+       <i class="fa fa-search"></i>
+    </button>
+
+  </div>
+</div>
+</form>
+
+{% for message in messages %}
+
+<div class="Error">
+    <a class="close" href="#" data-dismiss="alert"></a>
+
+    {{ message }}
+
+</div>
+{% endfor %}
+
+{%if submitbutton == "Submit" %}
+<div class="Weatherinfo">
+    <p>{{parsed_data.city}}</p>
+    <p>Current temperature: {{parsed_data.temperature}}°C</p>
+    <p>Description: {{parsed_data.description}}</p>
+    <p>Minimum temperature: {{parsed_data.mintemp}}°C</p>
+    <p>Maximum temperature: {{parsed_data.maxtemp}}°C</p>
+    <p>Wind Speed: {{parsed_data.windspeed}}Km/h</p>
+  </div>
+{% endif %}
+</body>
+</html>
